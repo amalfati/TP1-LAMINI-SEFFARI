@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-language" content="en">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Rapport | TP1-Attaques passives : sniffing passif </title>
+
+
+
+
+    <link rel="stylesheet" href="main.css">
+
+
+
+
+</head>
+
+
+
+<body>
+
+    <header class="site-header">
+
+        <div class="wrapper">
+
+            <span class="site-title">
+      
+    </span>
+
+            <nav class="site-nav">
+                <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+                <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+            </nav>
+
+        </div>
+
+
+    </header>
+    <div id="logo">
+        <img src="./image/all.PNG">
+    </div>
+
+    <div class="page-content">
+        <div class="wrapper">
+            <div class="post">
+
+                <header class="post-header">
+                    <h1 class="post-title" style="color:rgb(22, 25, 78)"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TP1 - Attaques passives : sniffing passif
+
+                    </h1>
+                    <center>
+                        <h2 class="post-description" style="color:rgb(166, 170, 255)"><u>Table of contents</u> </h2>
+                    </center>
+                </header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <article class="post-content Programming Widget Layout clearfix">
+                    <ul id="markdown-toc">
+
+                        <li>
+                            <a href="#introduction" id="markdown-toc-introduction">
+                                <p style="color:rgb(0, 0, 0)"><u>1- Introduction</u> </span>
+                                </p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#goals" id="markdown-toc-goals">
+                                <p style="color:rgb(0, 0, 0)"><u>2- Goals</u></p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#configuration" id="markdown-toc-configuration">
+                                <p style="color:rgb(0, 0, 0)"><u>3- Configuration</u> </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#Partie 1 : Implémentation d’un sniffer passif" id="markdown-toc-Partie 1 : Implémentation d’un sniffer passif">
+                                <p style="color:rgb(0, 0, 0)"><u>4- Partie 1 : Implémentation d’un sniffer passif</u> </span>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#Partie2 : manipulation de sniffers" id="markdown-toc-Partie2 : manipulation de sniffers">
+                                <p style="color:rgb(0, 0, 0)"><u>5-  Partie2 : manipulation de sniffers </u> </span>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#Partie3 : remote sniffing " id="markdown-toc-Partie3 : remote sniffing ">
+                                <p style="color:rgb(0, 0, 0) "><u>6- Partie3 : remote sniffing</u></p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#conclusion " id="markdown-toc-conclusion ">
+                                <p style="color:rgb(0, 0, 0) "><u>7- Conclusion</u></p>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div>
+                        <h1 id="introduction">
+                            <u>Introduction</u></p>
+                        </h1>
+
+
+
+                        <p>
+                            Sniffer est un processus de surveillance et de capture de tous les paquets de données passant par un réseau donné. Les sniffers sont utilisés par l'administrateur réseau/système pour surveiller et dépanner le trafic réseau. Les attaquants utilisent des
+                            sniffers pour capturer des paquets de données contenant des informations sensibles telles que mot de passe, informations de compte, etc.Il en existe deux types : mais dans ce cours pratique, nous apprendrons sniffing passif.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h1 id="goals"><u>Goals</u></h1>
+
+
+
+
+
+                        <blockquote>
+
+                            <li>
+
+                                <p>Implémenter un sniffer passif simple.
+                                </p>
+
+                            </li>
+                            <li>
+
+                                <p>Manipuler des logiciels de sniffing.
+                                </p>
+
+                            </li>
+
+
+                        </blockquote>
+
+
+
+
+
+                        <h1 id="configuration"><u>Configuration</u></h1>
+
+                        <p>1- On va utilisé <code class="language-plaintext highlighter-black ">Réseau interne </code> pour interconnecter les deux machines virtuelles(Ubuntu - windows7) entre elles
+                        </p>
+
+
+
+
+
+                        <p>2- Nous allons attribuer :
+
+
+                        </p>
+                        <li> L'adresse IP "192.168.1.3" à notre 1ère VM (Ubuntu)
+                        </li>
+                        <li> L'adresse IP "192.168.1.4" à notre 2ème VM (windows7)</li>
+
+                        </p>
+
+                        <p>3- Changement du type réseau en privé.
+
+
+                        </p>
+
+                        <p>4- Désactivation de la carte réseau du machine virtuelle
+
+
+
+                        </p>
+                        <p>5- Accès au serveur web de notre 1ère machine virtuelle
+
+
+                        </p>
+                        <p>6- Mode d'accès réseau "Réseau privé hôte"
+
+
+                        </p>
+
+
+
+
+
+                        <h1 id="Partie 1 : Implémentation d’un sniffer passif"><u> Partie 1:Implémentation d’un sniffer passif</u> </h1>
+
+                        <p>1- <code class="language-plaintext highlighter-black">Compilation</code> du code cource Annexe 1
+                        </p>
+
+
+                        <div class="center">
+                            <div class="figcaption">
+                                Creation fichier code
+                            </div>
+                            <img src="./image/c1.PNG" />
+
+                        </div>
+
+                        <div class="center">
+                            <div class="figcaption">
+                                Code du fichier
+                            </div>
+                        </div>
+                        <img src="./image/C2.PNG" />
+
+                        <div class="center">
+                            <div class="figcaption">
+                                Compilation
+                            </div>
+                            <img src="./image/P1.PNG" />
+                            <img src="./image/P2.PNG" />
+                            <img src="./image/P3.PNG" />
+                            <img src="./image/P4.PNG" />
+
+
+
+                        </div>
+                        <p>2- <code class="language-plaintext highlighter-black">Sniffer</code> les trames reçu sur l’interface enp0s3
+
+                            <div class="center">
+
+                                <img src="./image/C5.PNG" />
+
+                            </div>
+
+                            <div class="center">
+                                <div class="figcaption">
+                                    les trames reçu sur l’interface enp0s3
+                                </div>
+                                <img src="./image/C6.PNG" />
+
+                            </div>
+                            <p>3- Enlever le commentaire de la fonction ParseEthernetHeader, recompiler, régénérer l’exécutable et refaire l’étape 2).
+
+                                <div class="center">
+                                    <div class="figcaption">
+                                        Enlever le commentaire </div>
+                                    <img src="./image/C7.PNG" />
+
+                                </div>
+
+                                <div class="center">
+                                    <div class="figcaption">
+                                        Compilation
+                                    </div>
+                                    <img src="./image/P5.PNG" />
+                                    <img src="./image/P6.PNG" />
+
+
+
+                                </div>
+
+                                <div class="center">
+                                    <div class="figcaption">
+                                        Enlever commentaire
+                                    </div>
+                                    <img src="./image/C15.PNG" />
+
+                                </div>
+
+
+                                <div class="center">
+                                    <div class="figcaption">
+                                        Compilation
+                                    </div>
+                                    <img src="./image/P7.PNG" />
+                                    <img src="./image/P8.PNG" />
+
+
+                                </div>
+
+
+                                <p>4- Ecrire une fonction qui permet d’afficher l’entête UDP</p>
+                                <p>la fonction UDP</p>
+
+                                <pre style="color:#000000;background:#ffffff;">ParseUdpHeader<span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">unsigned</span> <span style="color:#800000; font-weight:bold; ">char</span> <span style="color:#808030; ">*</span>packet <span style="color:#808030; ">,</span> <span style="color:#800000; font-weight:bold; ">int</span> len<span style="color:#808030; ">)</span>
+    <span style="color:#800080; ">{</span>
+        <span style="color:#800000; font-weight:bold; ">struct</span> ethhdr <span style="color:#808030; ">*</span>ethernet_header<span style="color:#800080; ">;</span>
+        <span style="color:#800000; font-weight:bold; ">struct</span> iphdr <span style="color:#808030; ">*</span>ip_header<span style="color:#800080; ">;</span>
+        <span style="color:#800000; font-weight:bold; ">struct</span> udphdr <span style="color:#808030; ">*</span>udp_header<span style="color:#800080; ">;</span>
+    
+        <span style="color:#696969; ">/* Check if enough bytes are there for TCP Header */</span>
+    
+        <span style="color:#800000; font-weight:bold; ">if</span><span style="color:#808030; ">(</span>len <span style="color:#808030; ">&gt;</span><span style="color:#808030; ">=</span> <span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">sizeof</span><span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">struct</span> ethhdr<span style="color:#808030; ">)</span> <span style="color:#808030; ">+</span> <span style="color:#800000; font-weight:bold; ">sizeof</span><span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">struct</span> iphdr<span style="color:#808030; ">)</span> <span style="color:#808030; ">+</span> <span style="color:#800000; font-weight:bold; ">sizeof</span><span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">struct</span> udphdr<span style="color:#808030; ">)</span><span style="color:#808030; ">)</span><span style="color:#808030; ">)</span>
+        <span style="color:#800080; ">{</span>
+            <span style="color:#696969; ">/* Do all the checks: 1. Is it an IP pkt ? 2. is it TCP ? */</span>
+            
+            ethernet_header <span style="color:#808030; ">=</span> <span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">struct</span> ethhdr <span style="color:#808030; ">*</span><span style="color:#808030; ">)</span>packet<span style="color:#800080; ">;</span>
+    
+            <span style="color:#800000; font-weight:bold; ">if</span><span style="color:#808030; ">(</span><span style="color:#400000; ">ntohs</span><span style="color:#808030; ">(</span>ethernet_header<span style="color:#808030; ">-</span><span style="color:#808030; ">&gt;</span>h_proto<span style="color:#808030; ">)</span> <span style="color:#808030; ">=</span><span style="color:#808030; ">=</span> ETH_P_IP<span style="color:#808030; ">)</span>
+            <span style="color:#800080; ">{</span>
+                ip_header <span style="color:#808030; ">=</span> <span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">struct</span> iphdr <span style="color:#808030; ">*</span><span style="color:#808030; ">)</span><span style="color:#808030; ">(</span>packet <span style="color:#808030; ">+</span> <span style="color:#800000; font-weight:bold; ">sizeof</span><span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">struct</span> ethhdr<span style="color:#808030; ">)</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+    
+        
+                <span style="color:#800000; font-weight:bold; ">if</span><span style="color:#808030; ">(</span>ip_header<span style="color:#808030; ">-</span><span style="color:#808030; ">&gt;</span>protocol <span style="color:#808030; ">=</span><span style="color:#808030; ">=</span> IPPROTO_UDP<span style="color:#808030; ">)</span>
+                <span style="color:#800080; ">{</span>
+                    <span style="color:#603000; ">printf</span><span style="color:#808030; ">(</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">UDP datagram (UDP num=</span><span style="color:#007997; ">%d</span><span style="color:#0000e6; ">)</span><span style="color:#0f69ff; ">\n</span><span style="color:#800000; ">"</span><span style="color:#808030; ">,</span>	ip_header<span style="color:#808030; ">-</span><span style="color:#808030; ">&gt;</span>protocol<span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>						
+                    udp_header <span style="color:#808030; ">=</span> <span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">struct</span> udphdr<span style="color:#808030; ">*</span><span style="color:#808030; ">)</span><span style="color:#808030; ">(</span>packet <span style="color:#808030; ">+</span> <span style="color:#800000; font-weight:bold; ">sizeof</span><span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">struct</span> ethhdr<span style="color:#808030; ">)</span> <span style="color:#808030; ">+</span> ip_header<span style="color:#808030; ">-</span><span style="color:#808030; ">&gt;</span>ihl<span style="color:#808030; ">*</span><span style="color:#008c00; ">4</span> <span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+                    <span style="color:#696969; ">/* Print the Dest and Src ports */</span>
+    
+                    <span style="color:#603000; ">printf</span><span style="color:#808030; ">(</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">Source Port: </span><span style="color:#007997; ">%d</span><span style="color:#0f69ff; ">\n</span><span style="color:#800000; ">"</span><span style="color:#808030; ">,</span> <span style="color:#400000; ">ntohs</span><span style="color:#808030; ">(</span>udp_header<span style="color:#808030; ">-</span><span style="color:#808030; ">&gt;</span>source<span style="color:#808030; ">)</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+                    <span style="color:#603000; ">printf</span><span style="color:#808030; ">(</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">Dest Port: </span><span style="color:#007997; ">%d</span><span style="color:#0f69ff; ">\n</span><span style="color:#800000; ">"</span><span style="color:#808030; ">,</span> <span style="color:#400000; ">ntohs</span><span style="color:#808030; ">(</span>udp_header<span style="color:#808030; ">-</span><span style="color:#808030; ">&gt;</span>dest<span style="color:#808030; ">)</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+    
+                <span style="color:#800080; ">}</span>
+                <span style="color:#800000; font-weight:bold; ">else</span>
+                <span style="color:#800080; ">{</span>
+                    <span style="color:#603000; ">printf</span><span style="color:#808030; ">(</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">Not a UDP packet</span><span style="color:#0f69ff; ">\n</span><span style="color:#800000; ">"</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+                <span style="color:#800080; ">}</span>
+            <span style="color:#800080; ">}</span>
+            <span style="color:#800000; font-weight:bold; ">else</span>
+            <span style="color:#800080; ">{</span>
+                <span style="color:#603000; ">printf</span><span style="color:#808030; ">(</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">Not an IP packet</span><span style="color:#0f69ff; ">\n</span><span style="color:#800000; ">"</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+            <span style="color:#800080; ">}</span>	
+            
+        <span style="color:#800080; ">}</span>
+        <span style="color:#800000; font-weight:bold; ">else</span>
+        <span style="color:#800080; ">{</span>
+            <span style="color:#603000; ">printf</span><span style="color:#808030; ">(</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">UDP Header not present </span><span style="color:#0f69ff; ">\n</span><span style="color:#800000; ">"</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+    
+        <span style="color:#800080; ">}</span> 
+    <span style="color:#800080; ">}</span>
+    
+    
+    </pre>
+
+
+
+                                <div class="center">
+                                    <div class="figcaption">
+
+                                    </div>
+                                    <img src="./image/Z9.PNG" />
+                                    <img src="./image/Z10.PNG" />
+
+
+                                </div>
+
+
+
+
+
+
+                                <h1 id="Partie2 : manipulation de sniffers"><u> Partie2 : manipulation de sniffers </u></h1>
+
+                                <p>If faut tout d'abord installer <code class="language-plaintext highlighter-black">wiresharke</code>
+
+
+                                </p>
+
+
+                                <p>1- Capture des trames sur <code class="language-plaintext highlighter-black">wiresharke</code>
+                                </p>
+
+
+                                <div class="center">
+                                    <div class="figcaption">
+                                        installation
+                                    </div>
+                                    <img src="./image/C11.PNG" />
+
+                                </div>
+
+
+                                <div class="center">
+                                    <div class="figcaption">
+                                        installation
+                                    </div>
+                                    <img src="./image/C12.PNG" />
+
+                                </div>
+
+                                <div class="center">
+                                    <div class="figcaption">
+                                        wiresharke
+                                    </div>
+                                    <img src="./image/C13.PNG" />
+
+                                </div>
+                                <p>4- Configuration des filtres sur <code class="language-plaintext highlighter-black">wiresharke</code>
+                                </p>
+
+                                <div class="center">
+                                    <div class="figcaption">
+
+                                    </div>
+                                    <img src="./image/mac.PNG" />
+
+                                </div>
+                                <div class="center">
+                                    <div class="figcaption">
+
+                                    </div>
+                                    <img src="./image/tcp.PNG" />
+
+                                </div>
+                                <div class="center">
+                                    <div class="figcaption">
+
+                                    </div>
+                                    <img src="./image/frem.PNG" />
+
+                                </div>
+
+
+                                <h1 id="Partie3 : remote sniffing"><u>  Partie3 : remote sniffing</u></h1>
+
+
+
+                </article>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="page-content">
+            <div class="wrapper">
+                <div class="post">
+
+                    <div>
+                        <h1 id="conclusion">
+                            <u>Conclusion</u></h1>
+
+                        <p>
+                            <div class="center">
+                                Dans l'ensemble, les attaques par reniflage de réseau sont susceptibles de se produire à tout moment. Les utilisateurs doivent être extrêmement prudents quant à la façon dont ils utilisent et se connectent aux réseaux. À tout moment, les données doivent
+                                être transférées via un canal sécurisé et crypté. Cela réduit les risques d'attaque par sniff. En outre, les organisations doivent protéger leurs réseaux privés virtuels pour s'assurer que les pirates ne peuvent pas espionner
+                                les communications qui se produisent.
+                            </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <footer class="site-footer">
+
+            <div class="wrapper">
+                <p>Réalisée par:
+
+                </p>
+
+
+                <div class="footer-col-wrapper">
+                    <div class="footer-col footer-col-1">
+                        <ul class="contact-list">
+                            <li class="p-name">Amal Lamini </li>
+                            <li><a class="u-email" href="lamini.amal2001@gmail.com">lamini.amal2001@gmail.com</a></li>
+                        </ul>
+                        <ul class="contact-list">
+                            <li class="p-name">Fatima Ezzahra Seffari</li>
+                            <li><a class="u-email" href="fatimaezzahraseffari3@gmail.com">fatimaezzahraseffari3@gmail.com</a></li>
+                        </ul>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </footer>
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
